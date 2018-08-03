@@ -45,20 +45,20 @@ After moving the code, the following tasks would be completed:
 * the code documentation should be added
 * some of the methods in the code are only passing the arguments to the libindy so these methods should be removed
 * the code should be refined and improved in the process
-* build process would also be moved to hyperledger infrastructure keeping it separate from build process of libindy
+* build process would also be moved to hyperledger infrastructure keeping it separate from the build process of libindy
 * a separate artifact would be produced in every build
 * integration tests should be added so that whenever libindy or libvcx is changed this test may verify integration
 
 # Drawbacks
 [drawbacks]: #drawbacks
 
-* The size of Indy-SDK repository is quite substantial as of now. It contains two libraries, cli, wrappers, and other directories. These new changes will introduce an entire new library, its own set of wrappers, and additional supporting files needed for build process. While it does mean that users will have more tools to use, it certainly increases the size and complexity, which can be considered a drawback.
+* The size of Indy-SDK repository is quite substantial as of now. It contains two libraries, cli, wrappers, and other directories. These new changes will introduce an entirely new library, its own set of wrappers, and additional supporting files needed for the build process. While it does mean that users will have more tools to use, it certainly increases the size and complexity, which can be considered a drawback.
 
-* Having an entire new team of developers starting to work in Indy-SDK repository. Currently Indy-SDK has a stable core team which is responsible for the entire repository. This integration would bring a new group of developers who will be responsible for libvcx, its wrappers and build materials. This will cause some initial re-organisation, some communication overhead for future, and possibly issues if no clear boundaries and policies are set.
-  * To resolve this concern, teams will work within their own areas of the Indy-SDK, and participate in coordination meetings.
+* Having an entirely new team of developers starting to work in Indy-SDK repository. Currently, Indy-SDK has a stable core team which is responsible for the entire repository. This integration would bring a new group of developers who will be responsible for libvcx, its wrappers and build materials. This will cause some initial re-organization, some communication overhead for future, and possibly issues if no clear boundaries and policies are set.
+  * To resolve this concern, teams will work within their own areas of the Indy-SDK and participate in coordination meetings.
 
-* Managing versions. Since we will have two libraries, with libvcx being higher level and depending on libindy, the decision must be made on how to release new versions of both. Currently, it is possible to release new versions of libindy, and letting libvcx catch up. Libvcx would have the older version of libindy as dependency, and developers of libvcx would choose whether they want to develop against older or newer versions of libindy.
-With the proposed changes, this would imply having incompatible versions of libindy and libvcx on master, or different branching strategies (libindy being released from special branches). Second option is to require lock-step releases of libindy and libvcx, which could cause communication overhead and possibly slow the pace of development and releases, as things are required to be kept in sync.
+* Managing versions. Since we will have two libraries, with libvcx being higher level and depending on libindy, the decision must be made on how to release new versions of both. Currently, it is possible to release new versions of libindy, and letting libvcx catch-up. Libvcx would have the older version of libindy as a dependency, and developers of libvcx would choose whether they want to develop against older or newer versions of libindy.
+With the proposed changes, this would imply having incompatible versions of libindy and libvcx on the master, or different branching strategies (libindy being released from special branches). The second option is to require lock-step releases of libindy and libvcx, which could cause communication overhead and possibly slow the pace of development and releases, as things are required to be kept in sync.
 
 # Rationale and alternatives
 [alternatives]: #alternatives
@@ -66,6 +66,8 @@ With the proposed changes, this would imply having incompatible versions of libi
 * Keeping libvcx as it is, in a separate repository from Indy-SDK. The argument against it was that the credentials exchange is a core functionality and as such, it belongs to Indy-SDK.
 
 * Using git submodules (https://git-scm.com/book/en/v2/Git-Tools-Submodules). Indy-SDK would contain several git submodules, one for each library as well as for wrappers. The core team did not like this idea.
+
+* libvcx could live in a directory with a reference agent inside indy-agent repository. This would provide a working example of how libvcx can be used and allow public scrutiny and drive active community improvement of the indy-sdk. This would also support indy communities agreement of test-driven protocol development and remove any protocol bias libvcx may present by being inside indy-sdk. 
 
 # Prior art
 [prior-art]: #prior-art
